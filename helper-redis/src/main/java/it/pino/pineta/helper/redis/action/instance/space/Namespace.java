@@ -10,11 +10,7 @@ public final class Namespace {
 
     @JSONField(name = "class")
     private final @NotNull String value;
-
-    public static Namespace of(final @NotNull String value) {
-        return new Namespace(value);
-    }
-
+    
     public static Namespace of(final @NotNull Class<? extends RedisAction> clazz){
         return new Namespace(clazz.getSimpleName());
     }
