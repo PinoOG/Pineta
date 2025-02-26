@@ -8,20 +8,23 @@ import io.lettuce.core.codec.StringCodec;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.resource.ClientResources;
 import io.lettuce.core.support.ConnectionPoolSupport;
-import it.pino.pineta.helper.redis.api.ConnectionProvider;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class RedisConnectionProvider implements Comparable<RedisConnectionProvider>, ConnectionProvider {
+public final class RedisConnectionProvider implements ConnectionProvider {
 
-    private final RedisURI redisURI;
-    private final ClientResources clientResources;
-    private final ObjectPool<StatefulRedisConnection<String, String>> pool;
+    private final @NotNull RedisURI redisURI;
+    private final @NotNull ClientResources clientResources;
+    private final @NotNull ObjectPool<StatefulRedisConnection<String, String>> pool;
 
     private RedisClient redisClient;
     private ClientOptions clientOptions;
 
-    protected RedisConnectionProvider(final RedisURI.Builder uriBuilder, final ClientResources clientResources, final GenericObjectPoolConfig<StatefulRedisConnection<String, String>> poolConfig) {
+    public RedisConnectionProvider(final @NotNull RedisURI.Builder uriBuilder,
+                                   final @NotNull ClientResources clientResources,
+                                   final @NotNull GenericObjectPoolConfig<StatefulRedisConnection<String, String>> poolConfig)
+    {
         this.redisURI = uriBuilder.build();
         this.clientResources = clientResources;
         this.pool = ConnectionPoolSupport.createGenericObjectPool(() -> redisClient.connect(), poolConfig);
@@ -35,7 +38,6 @@ public abstract class RedisConnectionProvider implements Comparable<RedisConnect
     public void shutdown() throws Exception {
         this.pool.clear();
         this.pool.close();
-        this.redisClient.getResources().shutdown();
         this.redisClient.shutdown();
     }
 

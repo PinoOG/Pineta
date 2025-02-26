@@ -8,7 +8,7 @@
 
 rootProject.name = "Pineta"
 
-include("helper-redis")
+include("helper-redis", "plugin")
 
 pluginManagement {
     repositories {

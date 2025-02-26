@@ -1,8 +1,8 @@
-package it.pino.pineta.helper.redis.api.action;
+package it.pino.pineta.helper.redis.action.subscriber.listener;
 
 import io.lettuce.core.pubsub.RedisPubSubListener;
 
-public interface ActionListener extends RedisPubSubListener<String, String> {
+public interface RedisActionListener extends RedisPubSubListener<String, String> {
 
     @Override
     void message(final String channel, final String message);

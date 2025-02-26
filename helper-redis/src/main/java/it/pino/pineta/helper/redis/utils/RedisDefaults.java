@@ -52,7 +52,7 @@ public final class RedisDefaults {
             return this;
         }
 
-        public PoolBuilder applyRecommendedTests(){
+        public PoolBuilder useRecommendedTests(){
             this.config.setTestOnBorrow(true);
             this.config.setTestOnReturn(true);
             this.config.setTestWhileIdle(true);

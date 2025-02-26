@@ -8,4 +8,8 @@ build
 buildSrc/build
 buildSrc/.gradle
 
+# Helper-Redis
 helper-redis/build
+
+# Testing Plugin
+plugin
