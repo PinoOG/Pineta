@@ -7,7 +7,7 @@ import it.pino.pineta.helper.redis.ConnectionProvider;
 import it.pino.pineta.helper.redis.action.RedisAction;
 import it.pino.pineta.helper.redis.action.instance.RedisInstance;
 import it.pino.pineta.helper.redis.action.instance.space.Namespace;
-import it.pino.pineta.helper.redis.action.message.RedisActionMessage;
+import it.pino.pineta.helper.redis.action.subscriber.message.RedisActionMessage;
 import it.pino.pineta.helper.redis.action.subscriber.registration.ActionSubscriberRegistration;
 import it.pino.pineta.helper.redis.action.subscriber.registration.handler.ActionHandler;
 import it.pino.pineta.helper.redis.action.subscriber.listener.RedisActionListener;
@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
-public abstract class RedisActionSubscriber extends ActionSubscriber {
+public abstract class RedisActionSubscriber implements ActionSubscriber {
 
     private final @NotNull StatefulRedisPubSubConnection<String, String> pubSubConnection;
 
@@ -85,15 +85,16 @@ public abstract class RedisActionSubscriber extends ActionSubscriber {
     }
 
     @Override
-    public <T extends RedisAction> void registerSubscriber(final @NotNull Class<T> clazz, final @NotNull ActionHandler<T> handler) {
+    public <T extends RedisAction> void registerHandler(final @NotNull Class<T> clazz, final @NotNull ActionHandler<T> handler) {
         final var registration = new ActionSubscriberRegistration<>(clazz, handler);
-        final var namespace = Namespace.of(clazz);
+        final var namespace = Namespace.ofAction(clazz);
         registrations.put(namespace, registration);
     }
 
     @Override
-    public <T extends RedisAction> void registerSubscriber(final @NotNull ActionSubscriberRegistration<T> registration) {
-        final var namespace = Namespace.of(registration.getActionClass());
+    public <T extends RedisAction> void registerHandler(final @NotNull ActionSubscriberRegistration<T> registration) {
+        final var namespace = Namespace.ofAction(registration.getActionClass());
         registrations.put(namespace, registration);
     }
+
 }

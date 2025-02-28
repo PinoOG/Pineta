@@ -1,4 +1,4 @@
-package it.pino.pineta.helper.redis.action.message;
+package it.pino.pineta.helper.redis.action.subscriber.message;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import it.pino.pineta.helper.redis.action.RedisAction;
@@ -13,7 +13,7 @@ public final class RedisActionMessage<T extends RedisAction> implements ActionMe
 
     @JSONField(name = "namespace")
     private final @NotNull Namespace namespace;
-    @JSONField(name = "unique_id")
+    @JSONField(name = "unique-id")
     private final @NotNull UUID uniqueID;
     @JSONField(name = "sender")
     private final @NotNull RedisInstance sender;

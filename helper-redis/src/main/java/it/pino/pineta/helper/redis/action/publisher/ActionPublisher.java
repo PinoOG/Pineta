@@ -10,7 +10,7 @@ public interface ActionPublisher {
 
     @NotNull <T extends RedisAction> CompletionStage<Boolean> publish(final @NotNull T action);
 
-    @NotNull <T extends RedisAction> CompletionStage<Boolean> publish(final @NotNull T action, final @NotNull RedisInstance target);
+    @NotNull <T extends RedisAction> CompletionStage<Boolean> publish(final @NotNull T action, final RedisInstance target);
 
 
 }

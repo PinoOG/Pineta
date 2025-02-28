@@ -21,11 +21,11 @@ public final class RedisConnectionProvider implements ConnectionProvider {
     private RedisClient redisClient;
     private ClientOptions clientOptions;
 
-    public RedisConnectionProvider(final @NotNull RedisURI.Builder uriBuilder,
+    public RedisConnectionProvider(final @NotNull RedisURI redisURI,
                                    final @NotNull ClientResources clientResources,
                                    final @NotNull GenericObjectPoolConfig<StatefulRedisConnection<String, String>> poolConfig)
     {
-        this.redisURI = uriBuilder.build();
+        this.redisURI = redisURI;
         this.clientResources = clientResources;
         this.pool = ConnectionPoolSupport.createGenericObjectPool(() -> redisClient.connect(), poolConfig);
     }

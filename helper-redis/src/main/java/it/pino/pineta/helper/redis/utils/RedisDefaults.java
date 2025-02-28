@@ -74,7 +74,7 @@ public final class RedisDefaults {
 
     public static final ClientResources CLIENT_RESOURCES = DefaultClientResources.builder()
             .ioThreadPoolSize(Runtime.getRuntime().availableProcessors())
-            .computationThreadPoolSize(Runtime.getRuntime().availableProcessors())
+            .computationThreadPoolSize(Runtime.getRuntime().availableProcessors() / 2)
             .commandLatencyPublisherOptions(DefaultEventPublisherOptions.create())
             .reconnectDelay(Delay.decorrelatedJitter(100, 1000, 2, TimeUnit.MILLISECONDS))
             .build();

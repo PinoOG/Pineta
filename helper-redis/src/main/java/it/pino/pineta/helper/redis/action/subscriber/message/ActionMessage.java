@@ -1,4 +1,4 @@
-package it.pino.pineta.helper.redis.action.message;
+package it.pino.pineta.helper.redis.action.subscriber.message;
 
 import it.pino.pineta.helper.redis.action.RedisAction;
 import it.pino.pineta.helper.redis.action.instance.RedisInstance;
@@ -13,21 +13,21 @@ public interface ActionMessage<T extends RedisAction> {
     @NotNull Namespace getNamespace();
 
     /**
-     * Gets the unique identifier of this message.
+     * Gets the unique identifier ofAction this message.
      *
      * @return the unique identifier
      */
     @NotNull UUID getUniqueID();
 
     /**
-     * Gets the sender of this message.
+     * Gets the sender ofAction this message.
      *
      * @return the sender
      */
     @NotNull RedisInstance getSender();
 
     /**
-     * Nullability of the receiver is intended for actions that should be broadcasted to all instances.
+     * Nullability ofAction the receiver is intended for actions that should be broadcasted to all instances.
      * @return the receiver
      */
     @Nullable RedisInstance getReceiver();
