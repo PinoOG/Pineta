@@ -1,8 +1,6 @@
 package it.pino.pineta.helper.redis.action.request;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 import it.pino.pineta.helper.redis.ConnectionProvider;
@@ -13,9 +11,8 @@ import it.pino.pineta.helper.redis.action.request.message.RedisRequestMessage;
 import it.pino.pineta.helper.redis.action.request.message.RequestType;
 import it.pino.pineta.helper.redis.action.request.registration.RequestSubscriberRegistration;
 import it.pino.pineta.helper.redis.action.request.registration.handler.RequestSupplier;
-import it.pino.pineta.helper.redis.action.request.response.RequestResponse;
 import it.pino.pineta.helper.redis.action.request.response.Response;
-import it.pino.pineta.helper.redis.action.subscriber.listener.RedisActionListener;
+import it.pino.pineta.helper.redis.action.publisher.listener.RedisActionListener;
 import it.pino.pineta.helper.redis.channel.RedisChannel;
 import it.pino.pineta.helper.redis.exception.IncomingActionException;
 import it.pino.pineta.helper.redis.exception.PublishFailureException;
@@ -156,8 +153,7 @@ public abstract class RedisRequestPublisher implements RequestPublisher {
     @Override
     public <T extends RedisCallback> void registerSupplier(final @NotNull Class<T> clazz, final @NotNull RequestSupplier<T> supplier) {
         final var registration = new RequestSubscriberRegistration<>(clazz, supplier);
-        final var namespace = Namespace.ofCallback(clazz);
-        registrations.put(namespace, registration);
+        registerSupplier(registration);
     }
 
     @Override

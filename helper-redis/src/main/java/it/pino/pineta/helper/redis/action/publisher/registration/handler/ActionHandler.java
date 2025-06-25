@@ -1,4 +1,4 @@
-package it.pino.pineta.helper.redis.action.subscriber.registration.handler;
+package it.pino.pineta.helper.redis.action.publisher.registration.handler;
 
 
 import it.pino.pineta.helper.redis.action.RedisAction;

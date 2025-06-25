@@ -8,7 +8,7 @@
 
 rootProject.name = "Pineta"
 
-include("helper-redis", "plugin")
+include("helper-redis","helper-papermc", "plugin")
 
 pluginManagement {
     repositories {

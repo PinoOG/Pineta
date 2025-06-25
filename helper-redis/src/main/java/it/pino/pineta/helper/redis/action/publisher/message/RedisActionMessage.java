@@ -1,4 +1,4 @@
-package it.pino.pineta.helper.redis.action.subscriber.message;
+package it.pino.pineta.helper.redis.action.publisher.message;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import it.pino.pineta.helper.redis.action.RedisAction;

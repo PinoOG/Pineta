@@ -1,4 +1,4 @@
-package it.pino.pineta.helper.redis.action.subscriber.message;
+package it.pino.pineta.helper.redis.action.publisher.message;
 
 import it.pino.pineta.helper.redis.action.RedisAction;
 import it.pino.pineta.helper.redis.action.instance.RedisInstance;

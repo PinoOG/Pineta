@@ -1,8 +1,8 @@
-package it.pino.pineta.helper.redis.action.subscriber.registration;
+package it.pino.pineta.helper.redis.action.publisher.registration;
 
 import com.alibaba.fastjson2.JSONObject;
 import it.pino.pineta.helper.redis.action.RedisAction;
-import it.pino.pineta.helper.redis.action.subscriber.registration.handler.ActionHandler;
+import it.pino.pineta.helper.redis.action.publisher.registration.handler.ActionHandler;
 import org.jetbrains.annotations.NotNull;
 
 public final class ActionSubscriberRegistration<T extends RedisAction> {

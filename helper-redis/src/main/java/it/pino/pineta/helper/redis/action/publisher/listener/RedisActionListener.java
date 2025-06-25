@@ -1,4 +1,4 @@
-package it.pino.pineta.helper.redis.action.subscriber.listener;
+package it.pino.pineta.helper.redis.action.publisher.listener;
 
 import io.lettuce.core.pubsub.RedisPubSubListener;
 

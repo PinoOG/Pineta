@@ -12,7 +12,7 @@ import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.jetbrains.annotations.NotNull;
 
-public final class RedisConnectionProvider implements ConnectionProvider {
+public abstract class RedisConnectionProvider implements ConnectionProvider {
 
     private final @NotNull RedisURI redisURI;
     private final @NotNull ClientResources clientResources;
@@ -21,7 +21,7 @@ public final class RedisConnectionProvider implements ConnectionProvider {
     private RedisClient redisClient;
     private ClientOptions clientOptions;
 
-    public RedisConnectionProvider(final @NotNull RedisURI redisURI,
+    protected RedisConnectionProvider(final @NotNull RedisURI redisURI,
                                    final @NotNull ClientResources clientResources,
                                    final @NotNull GenericObjectPoolConfig<StatefulRedisConnection<String, String>> poolConfig)
     {
