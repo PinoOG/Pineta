@@ -129,7 +129,10 @@ public abstract class RedisRequestPublisher implements RequestPublisher {
         final var namespace = Namespace.ofCallback(callback);
 
         final var callbackMessage = new RedisRequestMessage.Builder<C>()
-                .setRequestType(RequestType.REQUEST).setNamespace(namespace).setSender(currentInstance).setReceiver(target)
+                .setRequestType(RequestType.REQUEST)
+                .setNamespace(namespace)
+                .setSender(currentInstance)
+                .setReceiver(target)
                 .build();
 
         final var id = callbackMessage.getUniqueID();

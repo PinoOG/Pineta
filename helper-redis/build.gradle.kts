@@ -1,3 +1,4 @@
+
 plugins{
     id("pineta-conventions")
 }
@@ -11,6 +12,10 @@ dependencies{
 }
 
 version = project.version as String
+
+tasks.named("publish") {
+    dependsOn("clean", "build")
+}
 
 extensions.configure<PublishingExtension> {
     repositories {

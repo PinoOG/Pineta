@@ -72,7 +72,6 @@ public final class RedisRequestMessage<T extends RedisCallback> implements Reque
     }
 
 
-    // Make a Builder of this class
     public static final class Builder<T extends RedisCallback> {
         private RequestType requestType;
         private Namespace namespace;

@@ -1,5 +1,6 @@
 package it.pino.pineta.helper.redis.action.publisher;
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
@@ -13,13 +14,18 @@ import it.pino.pineta.helper.redis.action.publisher.registration.handler.ActionH
 import it.pino.pineta.helper.redis.action.publisher.listener.RedisActionListener;
 import it.pino.pineta.helper.redis.channel.RedisChannel;
 import it.pino.pineta.helper.redis.exception.IncomingActionException;
+import it.pino.pineta.helper.redis.exception.PublishFailureException;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 public abstract class RedisActionPublisher implements ActionPublisher {
+
+    private final @NotNull ConnectionProvider connectionProvider;
 
     private final @NotNull StatefulRedisPubSubConnection<String, String> pubSubConnection;
 
@@ -38,6 +44,7 @@ public abstract class RedisActionPublisher implements ActionPublisher {
                                    final @NotNull ExecutorService executor,
                                    final @NotNull RedisInstance currentInstance)
     {
+        this.connectionProvider = connectionProvider;
         this.pubSubConnection = connectionProvider.getConnectionPubSub();
         this.asyncCommands = pubSubConnection.async();
         this.listeningChannel = listeningChannel;
@@ -82,6 +89,23 @@ public abstract class RedisActionPublisher implements ActionPublisher {
     public void unsubscribe() {
         pubSubConnection.removeListener(listener);
         asyncCommands.unsubscribe(listeningChannel.getName());
+    }
+
+    @Override
+    public <T extends RedisAction> CompletionStage<Long> publish(@NotNull T action) {
+        return publish(action, null);
+    }
+
+    @Override
+    public <T extends RedisAction> CompletionStage<Long> publish(@NotNull T action, RedisInstance target) {
+        try (var connection = this.connectionProvider.getConnection()) {
+            final var namespace = Namespace.ofAction(action.getClass());
+            final var actionMessage = new RedisActionMessage<>(currentInstance, target, action, namespace);
+            final var jsonMessage = JSON.toJSONString(actionMessage);
+            return connection.async().publish(listeningChannel.getName(), jsonMessage);
+        } catch (Exception ex) {
+            throw new PublishFailureException(ex, action);
+        }
     }
 
     @Override
